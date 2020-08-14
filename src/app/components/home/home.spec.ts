@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { TestBed, async } from '@angular/core/testing';
 import { MenuController } from '@ionic/angular';
 
-import { TutorialPage } from './tutorial';
+import { HomePage } from './home';
 
 import { IonicStorageModule } from '@ionic/storage';
-describe('TutorialPage', () => {
+describe('HomePage', () => {
   let fixture, app;
   beforeEach(async(() => {
     const menuSpy = jasmine.createSpyObj('MenuController', [
@@ -16,7 +16,7 @@ describe('TutorialPage', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
 
     TestBed.configureTestingModule({
-      declarations: [TutorialPage],
+      declarations: [HomePage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [IonicStorageModule.forRoot()],
       providers: [
@@ -27,15 +27,15 @@ describe('TutorialPage', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TutorialPage);
+    fixture = TestBed.createComponent(HomePage);
     app = fixture.debugElement.componentInstance;
   });
-  it('should create the tutorial page', () => {
+  it('should create the Home page', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should check the tutorial status', async () => {
-    const didTuts = await app.storage.get('ion_did_tutorial');
+  it('should check the Home status', async () => {
+    const didTuts = await app.storage.get('ion_did_home');
     expect(didTuts).toBeFalsy();
   });
 });

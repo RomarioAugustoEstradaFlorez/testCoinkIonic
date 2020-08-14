@@ -1,0 +1,88 @@
+@import '../../../theme/responsive';
+
+ion-toolbar {
+  --background: transparent;
+  --border-color: transparent;
+}
+
+ion-header {
+  &.header-md:after {
+    background: none;
+  }
+}
+
+/* Slider */
+.slide {
+  margin: 20px 0px;
+
+  &__item {
+    &--title {
+      color: #1EEA00;
+      font-size: 18px;
+      margin-bottom: 2rem;
+      padding: 0px 30px;
+
+      @include --tablet {
+        font-size: 2rem;
+      }
+    }
+
+    &--info {
+      font-size: 10px;
+      line-height: 8.5;
+      color: var(--ion-color-step-600, #60646b);
+
+      @include --tablet {
+        font-size: 1.5rem;
+        line-height: 4.5;
+      }
+    }
+
+    &--image {
+      max-height: 50%;
+      max-width: 136px;
+      margin: 36px 0;
+      pointer-events: none;
+
+
+      @include --tablet {
+        max-width: 400px;
+      }
+    }
+  }
+}
+
+.swiper-slide {
+  display: block;
+}
+
+/* Footer Buttons*/
+
+ion-footer {
+  background: var(--ion-color-medium-contrast);
+}
+
+ion-button {
+  margin-bottom: 10px;
+  width: 100%;
+  display: block;
+
+  @include --tablet {
+    width: calc(51% - 14px);
+    display: inline-block;
+    height: 70px;
+    font-size: 1.5rem;
+  }
+
+  @include --desktop {
+    width: calc(50% - 7px);
+  }
+}
+
+ion-button:nth-child(1) {
+  color: var(--ion-color-blue-dark-shade);
+}
+
+ion-button:nth-child(2) {
+  color: var(--ion-color-light-shade);
+}

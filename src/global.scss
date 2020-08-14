@@ -25,6 +25,8 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import './theme/responsive';
+
 /* Ionic */
 @font-face {
   font-family: 'Montserrat';
@@ -84,6 +86,12 @@ ion-button {
   font-size: 13px;
 }
 
+/* points dot slider*/
 .swiper-pagination-bullet {
   background: #004B40 !important;
+
+  @include --tablet {
+    width: 14px;
+    height: 14px;
+  }
 }

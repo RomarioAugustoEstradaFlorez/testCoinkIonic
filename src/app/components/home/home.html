@@ -1,0 +1,37 @@
+<ion-header no-border>
+
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color='primary' (click)="signUp()" [hidden]="!showSkip">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content fullscreen="true">
+
+  <ion-slides class="slide" #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager="true">
+    <ion-slide class="slide__item" *ngFor="let item of [1,2,3,4,5,6]">
+      <img src="assets/icon/icon.png" class="slide__item--image" />
+      <h2 class="slide__item--title">
+        {{item}}. LA ALCANCÍA QUE SIEMPRE TE ACOMPAÑA
+      </h2>
+      <span class="slide__item--info">
+        Desliza para aprender más
+      </span>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+
+  <div class="ion-padding">
+    <ion-button shape="round" (click)="signUp()" type="submit" expand="block">Registrate</ion-button>
+    <ion-button shape="round" color="secondary" type="submit" expand="block">Ingresar
+    </ion-button>
+  </div>
+
+</ion-footer>
