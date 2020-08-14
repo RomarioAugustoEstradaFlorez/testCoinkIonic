@@ -1,0 +1,31 @@
+<ion-grid class="nav-grid">
+  <ion-row>
+    <ion-col>
+      <div class="nav">
+        <div class="nav__back">
+          <a (click)="goBack(dataHeader.behind)">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </a>
+        </div>
+        <div class="nav__title">
+          <h2>{{dataHeader.name}} {{dataHeader.active}}</h2>
+        </div>
+        <div class="nav__steps">
+          <ul>
+            <li [ngClass]="{'active': dataHeader.id == 1 }"></li>
+            <li [ngClass]="{'active': dataHeader.id == 2 }"></li>
+            <li [ngClass]="{'active': dataHeader.id == 3 }"></li>
+            <li [ngClass]="{'active': dataHeader.id == 4 }"></li>
+          </ul>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<div id="container">
+  <strong>{{ dataHeader.name  }}</strong>
+  <p>Explore
+    <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a>
+  </p>
+</div>

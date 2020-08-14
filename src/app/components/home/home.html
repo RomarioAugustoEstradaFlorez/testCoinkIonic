@@ -10,7 +10,7 @@
 
 </ion-header>
 
-<ion-content fullscreen="true">
+<ion-content slot="start" fullscreen="true">
 
   <ion-slides class="slide" #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager="true">
     <ion-slide class="slide__item" *ngFor="let item of [1,2,3,4,5,6]">

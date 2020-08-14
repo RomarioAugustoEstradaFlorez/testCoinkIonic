@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
+import { ExploreComponentModule } from '../../container/explore/explore.module';
 
 import { NumberPage } from './number.page';
 
@@ -11,7 +11,7 @@ describe('NumberPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [NumberPage],
-      imports: [IonicModule.forRoot(), ExploreContainerComponentModule]
+      imports: [IonicModule.forRoot(), ExploreComponentModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NumberPage);
