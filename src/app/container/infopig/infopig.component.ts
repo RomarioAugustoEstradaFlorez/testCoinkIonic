@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./infopig.component.scss'],
 })
 export class InfopigComponent implements OnInit {
-  @Input() dataHeader: any;
+  @Input() dataSubHeader: any;
 
   constructor() { }
 

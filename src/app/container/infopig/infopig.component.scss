@@ -12,15 +12,20 @@
     text-align: center;
 
     & img {
-      max-width: 100px;
+      max-width: 80px;
       display: block;
     }
   }
 
   &--text {
-    margin-top: 30px;
+    & h2 {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: var(--ion-color-blue-dark);
+    }
 
     & p {
+      margin-top: 15px;
       color: var(--ion-color-medium-shade);
     }
   }

@@ -1,0 +1,56 @@
+.number {
+  position: relative;
+
+  &__info {
+    &--flag {
+      text-align: center;
+      position: relative;
+
+      & img {
+        margin-top: -4px;
+        position: absolute;
+        right: 0px;
+      }
+
+    }
+
+    &--phone {
+      color: var(--ion-color-dark-shade);
+
+      & span {
+        margin: 8px;
+        font-family: 'Monserrat';
+      }
+
+      & span:nth-child(1) {
+        top: 5px;
+        left: 0px
+      }
+
+      & span:nth-child(2) {
+        top: 5px;
+        left: 0px;
+      }
+    }
+  }
+
+  &__keyboard {
+    background: var(--ion-color-medium-contrast);
+    position: fixed;
+    bottom: 0px;
+    width: 100vw;
+    text-align: center;
+
+    & ion-button {
+      font-family: 'Montserrat';
+      font-size: 2rem;
+      height: 60px;
+      --box-shadow: none;
+    }
+
+    & .ion-color-light {
+      --ion-color-base: var(--ion-color-medium-contrast) !important;
+      --ion-color-contrast: var(--ion-color-blue-dark) !important;
+    }
+  }
+}

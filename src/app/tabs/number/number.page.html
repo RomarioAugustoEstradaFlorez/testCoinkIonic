@@ -1,4 +1,94 @@
-<ion-content [fullscreen]="true">
-  <app-explore [dataHeader]="dataHeader"></app-explore>
-  <app-infopig [dataHeader]="dataHeader"></app-infopig>
-</ion-content>
+<div class="number">
+  <ion-content [fullscreen]="true">
+    <app-explore [dataHeader]="dataHeader"></app-explore>
+    <app-infopig [dataSubHeader]="dataSubHeader"></app-infopig>
+
+
+    <ion-row>
+      <ion-col size="8" offset="2">
+        <ion-row class="number__info">
+          <ion-col size="2">
+            <div class="number__info--flag">
+              <img src="../../../assets/img/CO.svg" width="25" height="25" alt="Colombia">
+            </div>
+          </ion-col>
+
+          <ion-col size="10">
+            <div class="number__info--phone">
+              <span>
+                + {{number.code}}
+              </span>
+              <span>
+                ( {{ number.phone |slice:0:3 }} - {{ number.phone |slice:3 }} )
+              </span>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-col>
+      <ion-row>
+
+        <div class="number__keyboard">
+          <ion-row>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="addNumber(1)">1</ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="addNumber(2)">2</ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="addNumber(3)">3</ion-button>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="addNumber(4)">4</ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="addNumber(5)">5</ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="addNumber(6)">7</ion-button>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="addNumber(7)">7</ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="addNumber(8)">8</ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="addNumber(9)">9</ion-button>
+            </ion-col>
+          </ion-row>
+
+          <!-- actions and cero -->
+          <ion-row>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="deleteNumber()">
+                <ion-icon name="close-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="addNumber(0)">0</ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button color="light" expand="block" (click)="confirmNumber()">
+                <ion-icon name="checkmark-circle"></ion-icon>
+                <!-- <ion-icon name="checkmark-circle-outline"></ion-icon> -->
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+
+      </ion-row>
+    </ion-col>
+  </ion-content>
+
+</div>
