@@ -34,6 +34,17 @@
     }
   }
 
+  &__code {
+    text-align: center;
+    color: var(--ion-color-blue-dark);
+
+    & p {
+      font-size: 2rem;
+      letter-spacing: 10px;
+      font-weight: 600;
+    }
+  }
+
   &__keyboard {
     background: var(--ion-color-medium-contrast);
     position: fixed;
@@ -46,6 +57,10 @@
       font-size: 2rem;
       height: 60px;
       --box-shadow: none;
+
+      & ion-icon {
+        font-size: 4rem
+      }
     }
 
     & .ion-color-light {

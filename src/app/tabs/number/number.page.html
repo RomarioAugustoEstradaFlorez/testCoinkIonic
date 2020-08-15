@@ -6,7 +6,7 @@
 
     <ion-row>
       <ion-col size="8" offset="2">
-        <ion-row class="number__info">
+        <ion-row class="number__info" *ngIf="togglePhoneCode">
           <ion-col size="2">
             <div class="number__info--flag">
               <img src="../../../assets/img/CO.svg" width="25" height="25" alt="Colombia">
@@ -24,6 +24,13 @@
             </div>
           </ion-col>
         </ion-row>
+
+        <ion-row class="number__code" *ngIf="!togglePhoneCode">
+          <ion-col>
+            <p>{{code.number}}{{code.protect}}</p>
+          </ion-col>
+        </ion-row>
+
       </ion-col>
     </ion-row>
 
@@ -52,7 +59,7 @@
               <ion-button color="light" expand="block" (click)="addNumber(5)">5</ion-button>
             </ion-col>
             <ion-col size="4">
-              <ion-button color="light" expand="block" (click)="addNumber(6)">7</ion-button>
+              <ion-button color="light" expand="block" (click)="addNumber(6)">6</ion-button>
             </ion-col>
           </ion-row>
 
@@ -79,9 +86,23 @@
               <ion-button color="light" expand="block" (click)="addNumber(0)">0</ion-button>
             </ion-col>
             <ion-col size="4">
-              <ion-button color="light" expand="block" (click)="confirmNumber()">
-                <ion-icon name="checkmark-circle"></ion-icon>
-                <!-- <ion-icon name="checkmark-circle-outline"></ion-icon> -->
+
+              <ion-button *ngIf="togglePhoneCode" color="light" expand="block" (click)="confirmNumber()">
+                <div *ngIf="confirmPhone">
+                  <ion-icon color="primary" name="checkmark-circle"></ion-icon>
+                </div>
+                <div *ngIf="!confirmPhone">
+                  <ion-icon color="medium" name="checkmark-circle"></ion-icon>
+                </div>
+              </ion-button>
+
+              <ion-button *ngIf="!togglePhoneCode" color="light" expand="block" (click)="confirmTheCode()">
+                <div *ngIf="confirmCode">
+                  <ion-icon color="primary" name="checkmark-circle"></ion-icon>
+                </div>
+                <div *ngIf="!confirmCode">
+                  <ion-icon color="medium" name="checkmark-circle"></ion-icon>
+                </div>
               </ion-button>
             </ion-col>
           </ion-row>
