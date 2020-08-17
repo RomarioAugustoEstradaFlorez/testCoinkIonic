@@ -97,11 +97,15 @@ export class NumberPage implements OnInit {
   confirmTheCode() {
     if (this.code.number.length == 4) {
       this.router
-        .navigateByUrl('/tabs/tab2', { replaceUrl: true })
+        .navigateByUrl('/tabs/account', { replaceUrl: true })
         .then(() => {
 
         })
     }
+  }
+
+  resendCode() {
+
   }
 
 }

@@ -3,11 +3,11 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab2Page } from './tab2.page';
+import { AccountPage } from './account.page';
 import { ExploreComponentModule } from '../../container/explore/explore.module';
 import { InfopigComponentModule } from '../../container/infopig/infopig.module';
 
-import { Tab2PageRoutingModule } from './tab2-routing.module';
+import { AccountPageRoutingModule } from './account-routing.module';
 
 @NgModule({
   imports: [
@@ -16,8 +16,8 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     FormsModule,
     ExploreComponentModule,
     InfopigComponentModule,
-    Tab2PageRoutingModule
+    AccountPageRoutingModule
   ],
-  declarations: [Tab2Page]
+  declarations: [AccountPage]
 })
-export class Tab2PageModule { }
+export class AccountPageModule { }

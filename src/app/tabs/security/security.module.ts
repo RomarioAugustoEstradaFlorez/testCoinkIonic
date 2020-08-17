@@ -3,11 +3,11 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab3Page } from './tab3.page';
+import { SecurityPage } from './security.page';
 import { ExploreComponentModule } from '../../container/explore/explore.module';
 import { InfopigComponentModule } from '../../container/infopig/infopig.module';
 
-import { Tab3PageRoutingModule } from './tab3-routing.module'
+import { SecurityPageRoutingModule } from './security-routing.module'
 
 @NgModule({
   imports: [
@@ -16,9 +16,9 @@ import { Tab3PageRoutingModule } from './tab3-routing.module'
     FormsModule,
     ExploreComponentModule,
     InfopigComponentModule,
-    RouterModule.forChild([{ path: '', component: Tab3Page }]),
-    Tab3PageRoutingModule,
+    RouterModule.forChild([{ path: '', component: SecurityPage }]),
+    SecurityPageRoutingModule,
   ],
-  declarations: [Tab3Page]
+  declarations: [SecurityPage]
 })
-export class Tab3PageModule { }
+export class SecurityPageModule { }

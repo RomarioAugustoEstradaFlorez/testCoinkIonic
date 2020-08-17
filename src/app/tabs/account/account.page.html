@@ -1,0 +1,114 @@
+<ion-content [fullscreen]="true">
+
+  <app-explore [dataHeader]="dataHeader"></app-explore>
+
+  <app-infopig [dataSubHeader]="dataSubHeader"></app-infopig>
+
+  <!-- form -->
+  <form #signupForm="ngForm">
+    <ion-list class="form" lines="none" *ngIf="!validForm">
+      <ion-item class="form__item">
+        <ion-select [(ngModel)]="signup.documentType" name="documentType" #documentType="ngModel"
+          placeholder="Tipo de documento" required>
+          <ion-select-option *ngFor="let document of documentTypes" value="{{document.id}}">{{document.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="documentType.valid || submitted == false" class="ion-padding-start">
+          El tipo de documento es requerido
+        </p>
+      </ion-text>
+
+      <ion-item class="form__item">
+        <ion-input [(ngModel)]="signup.documentNumber" name="documentNumber" #documentNumber="ngModel"
+          placeholder="Número de documento" type="number" required></ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="documentNumber.valid || submitted == false" class="ion-padding-start">
+          El Número de documento es requerido
+        </p>
+      </ion-text>
+
+      <ion-item class="form__item">
+        <ion-datetime [(ngModel)]="signup.dateOfBirth" name="dateOfBirth" #dateOfBirth="ngModel"
+          placeholder="Fecha de nacimiento" display-timezone="utc" required>
+        </ion-datetime>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="dateOfBirth.valid || submitted == false" class="ion-padding-start">
+          La fecha de nacimiento es requerida
+        </p>
+      </ion-text>
+
+      <ion-item class="form__item">
+        <ion-datetime [(ngModel)]="signup.documentExpeditionDate" name="documentExpeditionDate"
+          #documentExpeditionDate="ngModel" placeholder="Fecha de expedición del documento" display-timezone="utc"
+          required>
+        </ion-datetime>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="documentExpeditionDate.valid || submitted == false" class="ion-padding-start">
+          La fecha de expedición es requerida
+        </p>
+      </ion-text>
+
+      <ion-item class="form__item">
+        <ion-select [(ngModel)]="signup.genre" name="genre" #genre="ngModel"
+          placeholder="Género que aparece en tu documento de identidad" required>
+          <ion-select-option *ngFor="let genre of genres" value="{{genre.id}}">{{genre.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="genre.valid || submitted == false" class="ion-padding-start">
+          El género que apaece en el documento de identidad es requerido
+        </p>
+      </ion-text>
+
+    </ion-list>
+  </form>
+
+  <!-- response validation -->
+  <ion-row class="response" *ngIf="validForm">
+    <ion-col size="12">
+      <p class="response__title">Primer Nombre</p>
+      <p class="response__value"><b>{{resPersonalInfo.first_name}}</b></p>
+    </ion-col>
+    <ion-col size="12">
+      <p class="response__title">Segundo Nombre</p>
+      <p class="response__value"><b>{{resPersonalInfo.second_name}}</b></p>
+    </ion-col>
+    <ion-col size="12">
+      <p class="response__title">Primer Apellido</p>
+      <p class="response__value"><b>{{resPersonalInfo.first_last_name}}</b></p>
+    </ion-col>
+    <ion-col size="12">
+      <p class="response__title">Segundo Apellido</p>
+      <p class="response__value"><b>{{resPersonalInfo.second_last_name}}</b></p>
+    </ion-col>
+    <ion-col size="12">
+      <p class="response__title">Género</p>
+      <p class="response__value"><b>{{resPersonalInfo.gender}}</b></p>
+    </ion-col>
+  </ion-row>
+
+</ion-content>
+
+<!-- buttons -->
+<div class="form__button ion-padding" *ngIf="!validForm">
+  <ion-button shape="round" color="primary" (click)="onSignup(signupForm)" type="submit" expand="block">Continuar
+  </ion-button>
+</div>
+
+<div class="form__button ion-padding" *ngIf="validForm">
+  <ion-row>
+    <ion-col size="6">
+      <ion-button shape="round" color="danger" (click)="cancel()" expand="block">Cancelar
+      </ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button shape="round" color="primary" (click)="goNext(signupForm)" expand="block">Continuar
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</div>

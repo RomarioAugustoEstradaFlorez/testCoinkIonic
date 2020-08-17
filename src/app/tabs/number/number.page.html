@@ -1,10 +1,11 @@
 <div class="number">
   <ion-content [fullscreen]="true">
+
     <app-explore [dataHeader]="dataHeader"></app-explore>
+
     <app-infopig [dataSubHeader]="dataSubHeader"></app-infopig>
 
-
-    <ion-row>
+    <ion-row class="number__shadow">
       <ion-col size="8" offset="2">
         <ion-row class="number__info" *ngIf="togglePhoneCode">
           <ion-col size="2">
@@ -34,7 +35,16 @@
       </ion-col>
     </ion-row>
 
+    <ion-row>
+      <ion-col (click)="resendCode()" *ngIf="!togglePhoneCode">
+        <p class="number__code--tryagain">
+          <ion-icon color="primary" name="refresh-outline"></ion-icon> Enviarme el código nuevamente
+        </p>
+      </ion-col>
+    </ion-row>
 
+
+    <!-- KeyBoard -->
     <ion-col>
       <ion-row>
 

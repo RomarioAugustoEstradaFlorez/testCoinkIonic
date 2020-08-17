@@ -2,6 +2,9 @@
   position: relative;
 
   &__info {
+    margin: 8px 0px;
+
+
     &--flag {
       text-align: center;
       position: relative;
@@ -19,6 +22,7 @@
 
       & span {
         margin: 8px;
+        margin-right: 0px;
         font-family: 'Monserrat';
       }
 
@@ -42,6 +46,22 @@
       font-size: 2rem;
       letter-spacing: 10px;
       font-weight: 600;
+      margin: 3px 0px;
+    }
+
+    &--tryagain {
+      margin: 10px 0px;
+      text-align: center;
+      font-size: 12px;
+
+      & ion-icon {
+        font-size: 18px;
+        margin-bottom: -4px;
+        transform: scaleX(-1);
+        -moz-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -ms-transform: scaleX(-1);
+      }
     }
   }
 
@@ -68,4 +88,11 @@
       --ion-color-contrast: var(--ion-color-blue-dark) !important;
     }
   }
+}
+
+ion-row.number__shadow {
+  -webkit-box-shadow: 1px 13px 24px -11px #cecfd2;
+  -moz-box-shadow: 1px 13px 24px -11px #cecfd2;
+  box-shadow: 1px 13px 24px -11px #cecfd2;
+  margin: 0px 12px;
 }

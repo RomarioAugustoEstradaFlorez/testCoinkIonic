@@ -81,9 +81,16 @@ p {
 }
 
 ion-button {
-  font-family: 'Montserrat-Light';
+  font-family: 'Montserrat';
   text-transform: inherit;
-  font-size: 13px;
+  font-size: 25px;
+  padding: 0px;
+  height: 50px;
+}
+
+ion-button.ion-color-primary.button-solid {
+  --color: var(--ion-color-blue-dark) !important;
+  --ion-color-contrast: var(--ion-color-blue-dark) !important;
 }
 
 /* points dot slider*/
@@ -95,4 +102,3 @@ ion-button {
     height: 14px;
   }
 }
-@import "~@mobiscroll/angular/dist/css/mobiscroll.scss";
