@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 import { UserOptions } from '../../interfaces/user-options';
-import { MessageService } from '../../services/message.service'
+import { MessageService } from '../../services/message/message.service'
 
 @Component({
   selector: 'app-account',

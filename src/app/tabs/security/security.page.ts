@@ -28,8 +28,6 @@ export class SecurityPage implements OnInit {
   }
 
   submitted = false
-  validForm: boolean
-  termsAccepted: boolean
 
 
   constructor(
@@ -42,11 +40,11 @@ export class SecurityPage implements OnInit {
     this.submitted = true;
 
     if ((form.valid) && (this.signup.email === this.signup.emailConfirm && this.signup.pin === this.signup.pinConfirm)) {
-      // console.log('form > ', this.signup)
-      this.validForm = true;
-      this.dataSubHeader.desc.title = 'CONFIGURA TU CUENTA';
-      this.dataSubHeader.desc.normal = 'Para finalizar, por favor';
-      this.dataSubHeader.desc.bold = 'lee con detenimiento este documento';
+      this.router
+        .navigateByUrl('/tabs/authorization', { replaceUrl: true })
+        .then(() => {
+
+        })
     }
   }
 
@@ -57,12 +55,6 @@ export class SecurityPage implements OnInit {
         this.signup['' + name] = event.key.replace(/\D/g, '')
         alert('Debes ingresar solo números para el PIN')
       }
-    }
-  }
-
-  finish() {
-    if (this.termsAccepted) {
-      console.log('termsAccepted > ', this.termsAccepted)
     }
   }
 }

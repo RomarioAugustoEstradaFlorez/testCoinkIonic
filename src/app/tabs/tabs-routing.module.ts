@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('./security/security.module').then(m => m.SecurityPageModule)
       },
       {
+        path: 'authorization',
+        loadChildren: () => import('./authorization/authorization.module').then(m => m.AuthorizationPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/number',
         pathMatch: 'full'

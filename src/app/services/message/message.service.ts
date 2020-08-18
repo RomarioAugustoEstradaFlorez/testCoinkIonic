@@ -12,6 +12,27 @@ export class MessageService {
 
   /**
    * Autor - Romario Estrada romarioestrada.ff@hotmail.com
+   * normal - This show an alert with one option whitout manage that option.
+   * This use the AlertController from Ionic and provides 
+   * a good functionality
+   * @param data - This have the information to the message
+   */
+  public async normal(data, okAction = () => { }) {
+    if (data.buttonText == '' || data.buttonText == undefined) data.buttonText = 'Ok'
+
+    var alert = await this.alertController.create({
+      cssClass: 'message message-normal',
+      header: data.title,
+      subHeader: data.subtitle,
+      message: data.message,
+      buttons: [data.buttonText]
+    });
+
+    await alert.present();
+  }
+
+  /**
+   * Autor - Romario Estrada romarioestrada.ff@hotmail.com
    * question - This show an alert with two options.
    * This use the AlertController from Ionic and provides 
    * a good functionality
@@ -48,7 +69,7 @@ export class MessageService {
 
   /**
    * Autor - Romario Estrada romarioestrada.ff@hotmail.com
-   * error - question - This show an alert with one option.
+   * error - This show an alert with one option.
    * This use the AlertController from Ionic and provides 
    * a good functionality
    * @param data - This have the information to the message
@@ -56,6 +77,7 @@ export class MessageService {
    * @param cancelAction - the function to manage the cancel state 
    */
   public async error(data, okAction = () => { }) {
+    if (data.buttonText == '' || data.buttonText == undefined) data.buttonText = 'Ok'
     var alert = await this.alertController.create({
       cssClass: 'message message-error',
       header: data.title,

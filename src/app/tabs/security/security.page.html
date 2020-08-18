@@ -6,7 +6,7 @@
 
   <!-- form -->
   <form #pinSecurityForm="ngForm">
-    <ion-list class="form" lines="none" *ngIf="!validForm">
+    <ion-list class="form" lines="none">
 
       <ion-item class="form__item">
         <ion-input [(ngModel)]="signup.email" name="email" #email="ngModel" placeholder="Correo electrónico"
@@ -59,67 +59,9 @@
     </ion-list>
   </form>
 
-  <!-- term and conditions -->
-  <ion-row class="terms" *ngIf="validForm">
-    <ion-col size="12">
-      <p class="terms__text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae nulla eget eros iaculis placerat ac ut
-        risus.
-        Duis tortor lacus, hendrerit sit amet commodo in, sodales eget massa. Nullam at lectus eget metus pulvinar
-        feugiat
-        in id mauris. Duis tristique fermentum ultrices. Cras ornare viverra leo at fermentum. Curabitur cursus in purus
-        nec
-        laoreet. Mauris egestas, ex ac accumsan aliquet, felis purus suscipit velit, id bibendum sapien nulla quis dui.
-        Sed
-        sed nulla ex. Donec interdum tempus urna, eleifend ornare turpis vulputate nec. Class aptent taciti sociosqu ad
-        litora torquent per conubia nostra, per inceptos himenaeos. Praesent cursus convallis ornare. Nunc luctus cursus
-        est, quis lacinia nisl viverra quis. Etiam ac magna quis mauris convallis faucibus ut at velit.
-      </p>
-
-      <p class="terms__text">1 Lorem ipsum dolor sit amet</p>
-      <p class="terms__text">2 Pellentesque convallis velit</p>
-      <p class="terms__text">3 Aliquam sed metus in </p>
-      <p class="terms__text">4 Praesent rhoncus libero nec semper auctor.</p>
-
-      <ul class="terms__options">
-        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Pellentesque convallis velit ac tortor placerat vestibulum.</li>
-        <li>Aliquam sed metus in quam dictum aliquam.</li>
-        <li>Praesent rhoncus libero nec semper auctor.</li>
-        <li>Suspendisse dignissim eros vitae mi semper, at eleifend justo gravida.</li>
-        <li>Proin nec sem faucibus ligula interdum vulputate.</li>
-      </ul>
-
-      <p class="terms__text">
-        Ut efficitur metus ac urna laoreet semper. Pellentesque a imperdiet nisl, non egestas leo. Morbi et felis ut
-        risus
-        fermentum blandit at ut lacus. Vestibulum vel libero at tellus euismod hendrerit eget sed ante. Praesent vel
-        tortor ac
-        neque interdum ultricies.
-      </p>
-
-      <div class="terms__check">
-        <ion-row>
-          <ion-col size="10">
-            <p>He leído, entendido y aceptado estos términos y condiciones</p>
-          </ion-col>
-          <ion-col size="2">
-            <ion-checkbox color="primary" [(ngModel)]="termsAccepted"></ion-checkbox>
-          </ion-col>
-        </ion-row>
-      </div>
-    </ion-col>
-  </ion-row>
-
 </ion-content>
 
-<div class="form__button ion-padding" *ngIf="!validForm">
+<div class="form__button ion-padding">
   <ion-button shape="round" color="primary" (click)="pinSingup(pinSecurityForm)" type="submit" expand="block">Siguiente
-  </ion-button>
-</div>
-
-<div class="form__button ion-padding" *ngIf="validForm">
-  <ion-button shape="round" color="primary" (click)="finish()" type="submit" expand="block">Aceptar y
-    finalizar
   </ion-button>
 </div>
