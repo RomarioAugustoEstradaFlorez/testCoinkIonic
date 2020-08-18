@@ -1,4 +1,128 @@
 <ion-content [fullscreen]="true">
+
   <app-explore [dataHeader]="dataHeader"></app-explore>
+
   <app-infopig [dataSubHeader]="dataSubHeader"></app-infopig>
+
+  <!-- form -->
+  <form #pinSecurityForm="ngForm">
+    <ion-list class="form" lines="none" *ngIf="!validForm">
+
+      <ion-item class="form__item">
+        <ion-input [(ngModel)]="signup.email" name="email" #email="ngModel" placeholder="Correo electrónico"
+          type="email" required></ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
+          El correo electrónico es requerido
+        </p>
+      </ion-text>
+
+      <ion-item class="form__item">
+        <ion-input [(ngModel)]="signup.emailConfirm" name="emailConfirm" #emailConfirm="ngModel"
+          placeholder="Confirmar correo electrónico" type="email" required></ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="emailConfirm.valid || submitted == false" class="ion-padding-start">
+          La confirmación del correo electrónico es requerido
+        </p>
+        <p [hidden]="signup.emailConfirm == signup.email || submitted == false" class="ion-padding-start">
+          El correo electrónico debe ser igual al escrito anteriormente
+        </p>
+      </ion-text>
+
+      <ion-item class="form__item">
+        <ion-input [(ngModel)]="signup.pin" name="pin" #pin="ngModel" placeholder="PIN de seguridad" type="password"
+          type="password"
+          onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,''),alert('Debes ingresar solo números para el PIN')"
+          required></ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="pin.valid || submitted == false" class="ion-padding-start">
+          El PIN es requerido
+        </p>
+      </ion-text>
+
+      <ion-item class="form__item">
+        <ion-input [(ngModel)]="signup.pinConfirm" name="pinConfirm" #pinConfirm="ngModel"
+          placeholder="Confirmar PIN de seguridad" type="password" type="password"
+          onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,''),alert('Debes ingresar solo números para el PIN')"
+          required></ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="pinConfirm.valid || submitted == false" class="ion-padding-start">
+          La confirmación del PIN es requerida
+        </p>
+        <p [hidden]="signup.pinConfirm == signup.pin || submitted == false" class="ion-padding-start">
+          El PIN de confirmación debe ser igual al escrito anteriormente
+        </p>
+      </ion-text>
+
+    </ion-list>
+  </form>
+
+  <!-- term and conditions -->
+  <ion-row>
+    <ion-col size="12">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae nulla eget eros iaculis placerat ac ut
+        risus.
+        Duis tortor lacus, hendrerit sit amet commodo in, sodales eget massa. Nullam at lectus eget metus pulvinar
+        feugiat
+        in id mauris. Duis tristique fermentum ultrices. Cras ornare viverra leo at fermentum. Curabitur cursus in purus
+        nec
+        laoreet. Mauris egestas, ex ac accumsan aliquet, felis purus suscipit velit, id bibendum sapien nulla quis dui.
+        Sed
+        sed nulla ex. Donec interdum tempus urna, eleifend ornare turpis vulputate nec. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Praesent cursus convallis ornare. Nunc luctus cursus
+        est, quis lacinia nisl viverra quis. Etiam ac magna quis mauris convallis faucibus ut at velit.
+      </p>
+
+      <ul>
+        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+        <li>Pellentesque convallis velit ac tortor placerat vestibulum.</li>
+        <li>Aliquam sed metus in quam dictum aliquam.</li>
+        <li>Praesent rhoncus libero nec semper auctor.</li>
+        <li>Suspendisse dignissim eros vitae mi semper, at eleifend justo gravida.</li>
+        <li>Proin nec sem faucibus ligula interdum vulputate.</li>
+        <li>Nullam et magna a enim laoreet pharetra vel at ipsum.</li>
+        <li>Aliquam sollicitudin dui commodo turpis faucibus consectetur.</li>
+        <li>Pellentesque efficitur ipsum sed quam consequat, sagittis varius quam hendrerit.</li>
+        <li>Maecenas mattis nunc pulvinar, pharetra nunc ut, feugiat risus.</li>
+        <li>Maecenas eu ligula eget ante venenatis cursus.</li>
+        <li>Quisque sed nunc et enim pulvinar sagittis.</li>
+        <li>Nullam suscipit est ut tellus ultrices, ac tristique odio consequat.</li>
+        <li>Morbi tincidunt ex sed lacus cursus, vitae hendrerit felis gravida.</li>
+      </ul>
+
+      <p>
+        Ut efficitur metus ac urna laoreet semper. Pellentesque a imperdiet nisl, non egestas leo. Morbi et felis ut
+        risus
+        fermentum blandit at ut lacus. Vestibulum vel libero at tellus euismod hendrerit eget sed ante. Praesent vel
+        tortor ac
+        neque interdum ultricies. Duis pellentesque elit vitae porta imperdiet. In cursus viverra lobortis. Morbi a
+        convallis
+        tellus. Ut id cursus tortor, eu posuere enim. Pellentesque scelerisque massa ac sem volutpat, in molestie neque
+        cursus. Vivamus at ultricies eros, non maximus est. Mauris ex enim, tempor quis risus ac, tincidunt vestibulum
+        tortor.
+        Sed bibendum ante eu tincidunt viverra. Vivamus sit amet lectus in erat ullamcorper tincidunt at congue nisl.
+      </p>
+    </ion-col>
+
+    <ion-col size="12">
+      <p>He leído, entendido y aceptado estos términos y condiciones</p>
+    </ion-col>
+  </ion-row>
+
 </ion-content>
+
+<div class="form__button ion-padding" *ngIf="!validForm">
+  <ion-button shape="round" color="primary" (click)="pinSingup(pinSecurityForm)" type="submit" expand="block">Siguiente
+  </ion-button>
+</div>
+
+<div class="form__button ion-padding" *ngIf="validForm">
+  <ion-button shape="round" color="primary" (click)="pinSingup(pinSecurityForm)" type="submit" expand="block">Aceptar y
+    finalizar
+  </ion-button>
+</div>
