@@ -33,9 +33,7 @@
 
       <ion-item class="form__item">
         <ion-input [(ngModel)]="signup.pin" name="pin" #pin="ngModel" placeholder="PIN de seguridad" type="password"
-          type="password"
-          onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,''),alert('Debes ingresar solo números para el PIN')"
-          required></ion-input>
+          type="password" (keyup)="onlyNumber($event, 'pin')" required></ion-input>
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="pin.valid || submitted == false" class="ion-padding-start">
@@ -46,8 +44,8 @@
       <ion-item class="form__item">
         <ion-input [(ngModel)]="signup.pinConfirm" name="pinConfirm" #pinConfirm="ngModel"
           placeholder="Confirmar PIN de seguridad" type="password" type="password"
-          onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,''),alert('Debes ingresar solo números para el PIN')"
-          required></ion-input>
+          (keyup)="onlyNumber($event, 'pinConfirm')" required>
+        </ion-input>
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="pinConfirm.valid || submitted == false" class="ion-padding-start">
@@ -62,9 +60,9 @@
   </form>
 
   <!-- term and conditions -->
-  <ion-row>
+  <ion-row class="terms" *ngIf="validForm">
     <ion-col size="12">
-      <p>
+      <p class="terms__text">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae nulla eget eros iaculis placerat ac ut
         risus.
         Duis tortor lacus, hendrerit sit amet commodo in, sodales eget massa. Nullam at lectus eget metus pulvinar
@@ -78,39 +76,38 @@
         est, quis lacinia nisl viverra quis. Etiam ac magna quis mauris convallis faucibus ut at velit.
       </p>
 
-      <ul>
+      <p class="terms__text">1 Lorem ipsum dolor sit amet</p>
+      <p class="terms__text">2 Pellentesque convallis velit</p>
+      <p class="terms__text">3 Aliquam sed metus in </p>
+      <p class="terms__text">4 Praesent rhoncus libero nec semper auctor.</p>
+
+      <ul class="terms__options">
         <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
         <li>Pellentesque convallis velit ac tortor placerat vestibulum.</li>
         <li>Aliquam sed metus in quam dictum aliquam.</li>
         <li>Praesent rhoncus libero nec semper auctor.</li>
         <li>Suspendisse dignissim eros vitae mi semper, at eleifend justo gravida.</li>
         <li>Proin nec sem faucibus ligula interdum vulputate.</li>
-        <li>Nullam et magna a enim laoreet pharetra vel at ipsum.</li>
-        <li>Aliquam sollicitudin dui commodo turpis faucibus consectetur.</li>
-        <li>Pellentesque efficitur ipsum sed quam consequat, sagittis varius quam hendrerit.</li>
-        <li>Maecenas mattis nunc pulvinar, pharetra nunc ut, feugiat risus.</li>
-        <li>Maecenas eu ligula eget ante venenatis cursus.</li>
-        <li>Quisque sed nunc et enim pulvinar sagittis.</li>
-        <li>Nullam suscipit est ut tellus ultrices, ac tristique odio consequat.</li>
-        <li>Morbi tincidunt ex sed lacus cursus, vitae hendrerit felis gravida.</li>
       </ul>
 
-      <p>
+      <p class="terms__text">
         Ut efficitur metus ac urna laoreet semper. Pellentesque a imperdiet nisl, non egestas leo. Morbi et felis ut
         risus
         fermentum blandit at ut lacus. Vestibulum vel libero at tellus euismod hendrerit eget sed ante. Praesent vel
         tortor ac
-        neque interdum ultricies. Duis pellentesque elit vitae porta imperdiet. In cursus viverra lobortis. Morbi a
-        convallis
-        tellus. Ut id cursus tortor, eu posuere enim. Pellentesque scelerisque massa ac sem volutpat, in molestie neque
-        cursus. Vivamus at ultricies eros, non maximus est. Mauris ex enim, tempor quis risus ac, tincidunt vestibulum
-        tortor.
-        Sed bibendum ante eu tincidunt viverra. Vivamus sit amet lectus in erat ullamcorper tincidunt at congue nisl.
+        neque interdum ultricies.
       </p>
-    </ion-col>
 
-    <ion-col size="12">
-      <p>He leído, entendido y aceptado estos términos y condiciones</p>
+      <div class="terms__check">
+        <ion-row>
+          <ion-col size="10">
+            <p>He leído, entendido y aceptado estos términos y condiciones</p>
+          </ion-col>
+          <ion-col size="2">
+            <ion-checkbox color="primary" [(ngModel)]="termsAccepted"></ion-checkbox>
+          </ion-col>
+        </ion-row>
+      </div>
     </ion-col>
   </ion-row>
 
@@ -122,7 +119,7 @@
 </div>
 
 <div class="form__button ion-padding" *ngIf="validForm">
-  <ion-button shape="round" color="primary" (click)="pinSingup(pinSecurityForm)" type="submit" expand="block">Aceptar y
+  <ion-button shape="round" color="primary" (click)="finish()" type="submit" expand="block">Aceptar y
     finalizar
   </ion-button>
 </div>

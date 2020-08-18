@@ -16,7 +16,6 @@ import { SecurityPageRoutingModule } from './security-routing.module'
     FormsModule,
     ExploreComponentModule,
     InfopigComponentModule,
-    RouterModule.forChild([{ path: '', component: SecurityPage }]),
     SecurityPageRoutingModule,
   ],
   declarations: [SecurityPage]

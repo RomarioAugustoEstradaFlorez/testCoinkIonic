@@ -19,3 +19,38 @@
     background: var(--ion-color-medium-contrast)
   }
 }
+
+.terms {
+  line-height: 24px;
+  padding: 0px 20px;
+
+  &__text {
+    font-size: 15px;
+    color: var(--ion-color-light-contrast);
+  }
+
+  &__options {
+    & li {
+      font-size: 15px;
+      color: var(--ion-color-light-contrast);
+    }
+  }
+
+  &__check {
+    padding-bottom: 120px;
+    padding-top: 40px;
+
+    & p {
+      font-family: 'Montserrat-Italic';
+      font-weight: 600;
+      font-size: 13px;
+      margin: 0px
+    }
+
+    & ion-checkbox {
+      margin: 12px auto;
+      width: 22px;
+      height: 22px;
+    }
+  }
+}

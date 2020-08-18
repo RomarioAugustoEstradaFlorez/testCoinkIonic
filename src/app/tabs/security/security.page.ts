@@ -29,6 +29,7 @@ export class SecurityPage implements OnInit {
 
   submitted = false
   validForm: boolean
+  termsAccepted: boolean
 
 
   constructor(
@@ -46,6 +47,22 @@ export class SecurityPage implements OnInit {
       this.dataSubHeader.desc.title = 'CONFIGURA TU CUENTA';
       this.dataSubHeader.desc.normal = 'Para finalizar, por favor';
       this.dataSubHeader.desc.bold = 'lee con detenimiento este documento';
+    }
+  }
+
+  onlyNumber(event, name) {
+    // console.log('event > ', event)
+    if (event.which <= 90 && event.which >= 48 && event.which != 9) {
+      if (/\D/g.test(event.key)) {
+        this.signup['' + name] = event.key.replace(/\D/g, '')
+        alert('Debes ingresar solo números para el PIN')
+      }
+    }
+  }
+
+  finish() {
+    if (this.termsAccepted) {
+      console.log('termsAccepted > ', this.termsAccepted)
     }
   }
 }
