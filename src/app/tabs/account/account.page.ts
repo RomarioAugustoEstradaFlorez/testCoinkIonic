@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 import { UserOptions } from '../../interfaces/user-options';
+import { MessageService } from '../../services/message.service'
 
 @Component({
   selector: 'app-account',
@@ -62,10 +64,37 @@ export class AccountPage implements OnInit {
   }
 
   constructor(
-    public router: Router
+    public router: Router,
+    public alertController: AlertController,
+    public messageService: MessageService
   ) { }
 
   ngOnInit() {
+    const messageService = this.messageService;
+    let dataMessage = {
+      'title': '¿Estás seguro?',
+      'message': 'Si cancelas la verificación, tu progreso se perderá y tendrás que volver a empezar.',
+    }
+    messageService.question(
+      dataMessage,
+      function ok() {
+        console.log('hola ok')
+      },
+      function cancel() {
+        console.log('hola cancel')
+        let dataError = {
+          'title': '¿Estás seguro?',
+          'message': 'Si cancelas la verificación, tu progreso se perderá y tendrás que volver a empezar.',
+          'buttonText': 'VOLVER A INTENTAR'
+        }
+        messageService.error(
+          dataError,
+          function ok() {
+            console.log('hola ok ERROR')
+          },
+        );
+      },
+    );
 
   }
 
