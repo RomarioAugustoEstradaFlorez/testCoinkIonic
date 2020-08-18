@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 import { UserOptions } from '../../interfaces/user-options';
+
+import { SignupService } from '../../services/signup/signup.service'
 import { MessageService } from '../../services/message/message.service'
 
 @Component({
@@ -66,37 +68,11 @@ export class AccountPage implements OnInit {
   constructor(
     public router: Router,
     public alertController: AlertController,
-    public messageService: MessageService
+    public messageService: MessageService,
+    public signupService: SignupService
   ) { }
 
-  ngOnInit() {
-    const messageService = this.messageService;
-    let dataMessage = {
-      'title': '¿Estás seguro?',
-      'message': 'Si cancelas la verificación, tu progreso se perderá y tendrás que volver a empezar.',
-    }
-    messageService.question(
-      dataMessage,
-      function ok() {
-        console.log('hola ok')
-      },
-      function cancel() {
-        console.log('hola cancel')
-        let dataError = {
-          'title': '¿Estás seguro?',
-          'message': 'Si cancelas la verificación, tu progreso se perderá y tendrás que volver a empezar.',
-          'buttonText': 'VOLVER A INTENTAR'
-        }
-        messageService.error(
-          dataError,
-          function ok() {
-            console.log('hola ok ERROR')
-          },
-        );
-      },
-    );
-
-  }
+  ngOnInit() { }
 
   onSignup(form: NgForm) {
     this.submitted = true;
@@ -106,6 +82,17 @@ export class AccountPage implements OnInit {
       this.validForm = true;
       this.dataSubHeader.desc.title = 'VERIFICA TUS DATOS';
       this.dataSubHeader.desc.normal = 'Estos son tu datos?...';
+
+      let dataToSend = {
+        "document_number": this.signup.documentNumber,
+        "document_type": this.signup.documentType,
+        "expedition_date": this.signup.documentExpeditionDate,
+        "birth_date": this.signup.dateOfBirth
+      }
+      console.log('dataToSend > ', dataToSend)
+      this.signupService.signUpCifin(dataToSend).subscribe((res) => {
+        console.log('res > ', res)
+      })
     }
   }
 

@@ -1,7 +1,7 @@
 
 export interface UserOptions {
-  documentType?: number;
-  documentNumber?: number;
+  documentType?: string;
+  documentNumber?: string;
   dateOfBirth: string;
   documentExpeditionDate: string;
   genre?: number;

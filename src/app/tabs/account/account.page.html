@@ -10,7 +10,7 @@
       <ion-item class="form__item">
         <ion-select [(ngModel)]="signup.documentType" name="documentType" #documentType="ngModel"
           placeholder="Tipo de documento" required>
-          <ion-select-option *ngFor="let document of documentTypes" value="{{document.id}}">{{document.name}}
+          <ion-select-option *ngFor="let document of documentTypes" value="{{document.name}}">{{document.name}}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -22,7 +22,7 @@
 
       <ion-item class="form__item">
         <ion-input [(ngModel)]="signup.documentNumber" name="documentNumber" #documentNumber="ngModel"
-          placeholder="Número de documento" type="number" required></ion-input>
+          placeholder="Número de documento" type="text" required></ion-input>
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="documentNumber.valid || submitted == false" class="ion-padding-start">
@@ -32,7 +32,7 @@
 
       <ion-item class="form__item">
         <ion-datetime [(ngModel)]="signup.dateOfBirth" name="dateOfBirth" #dateOfBirth="ngModel"
-          placeholder="Fecha de nacimiento" display-timezone="utc" required>
+          placeholder="Fecha de nacimiento" displayFormat="D MMMM YYYY" required>
         </ion-datetime>
       </ion-item>
       <ion-text color="danger">
@@ -43,7 +43,7 @@
 
       <ion-item class="form__item">
         <ion-datetime [(ngModel)]="signup.documentExpeditionDate" name="documentExpeditionDate"
-          #documentExpeditionDate="ngModel" placeholder="Fecha de expedición del documento" display-timezone="utc"
+          #documentExpeditionDate="ngModel" placeholder="Fecha de expedición del documento" displayFormat="D MMMM YYYY"
           required>
         </ion-datetime>
       </ion-item>
