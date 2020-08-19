@@ -10,6 +10,11 @@ import { environment } from '../../../environments/environment'
 })
 export class SignupService {
 
+  headers: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
+
   constructor(
     private http: HttpClient,
     private encryptService: EncryptService
@@ -17,31 +22,31 @@ export class SignupService {
 
 
   signUpV2(data): Observable<any> {
-    let EncryptData = this.encryptService.encrypt(data, environment.apiKey);
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + environment.apiKey
-    })
-    return this.http.post(environment.api + '/Signup/v2', { "payload": EncryptData }, { 'headers': headers });
+    let EncryptData = this.encryptService.encrypt(JSON.stringify(data), environment.keyCryptDecrypt);
+    return this.http.post(environment.api + '/Signup/v2?apiKey=' + environment.apiKey, { "payload": EncryptData }, { 'headers': this.headers });
   }
 
   signUpCifin(data): Observable<any> {
-    let EncryptData = this.encryptService.encrypt(data, environment.apiKey);
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + environment.apiKey
-    })
+    let EncryptData = this.encryptService.encrypt(JSON.stringify(data), environment.keyCryptDecrypt);
     // this.encryptService.encrypt()
-    return this.http.post(environment.api + '/Signup/cifin', { "payload": EncryptData }, { 'headers': headers });
+    return this.http.post(environment.api + '/Signup/cifin?apiKey=' + environment.apiKey, { "payload": EncryptData }, { 'headers': this.headers });
   }
 
   login(data): Observable<any> {
-    let EncryptData = this.encryptService.encrypt(data, environment.apiKey);
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + environment.apiKey
-    })
-    return this.http.post(environment.api + '/Login/verifyDirectLogin', { "payload": EncryptData }, { 'headers': headers });
+    let EncryptData = this.encryptService.encrypt(JSON.stringify(data), environment.keyCryptDecrypt);
+    return this.http.post(environment.api + '/Login/verifyDirectLogin?apiKey=' + environment.apiKey, { "payload": EncryptData }, { 'headers': this.headers });
+  }
+
+  testEncrypt(data) {
+    let EncryptData = this.encryptService.encrypt(JSON.stringify(data), environment.keyCryptDecrypt)
+    // console.log('EncryptData > ', EncryptData)
+    return EncryptData
+  }
+
+  testDecrypt(hash) {
+    let DecryptData = this.encryptService.decrypt(hash, environment.keyCryptDecrypt)
+    // console.log('DecryptData > ', DecryptData)
+    return DecryptData
   }
 
   // Signup/v2 

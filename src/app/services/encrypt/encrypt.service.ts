@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core'
+import CryptoJs from 'crypto-js'
 import TripleDes from 'crypto-js/tripledes'
-import EncUtf8 from 'crypto-js/enc-utf8'
 import EncHex from 'crypto-js/enc-hex'
 import Md5 from 'crypto-js/md5'
-import ModeEcb from 'crypto-js/mode-ecb'
-import PadPkcs7 from 'crypto-js/pad-pkcs7'
-import EncBase64 from 'crypto-js/enc-base64'
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +12,18 @@ export class EncryptService {
   constructor() { }
 
   encrypt(serialized_json: string, key: string) {
-    const encryptedArray = EncUtf8.parse(serialized_json);
+    const encryptedArray = CryptoJs.enc.Utf8.parse(serialized_json);
     const keyHash = this.getKeyHash(key);
-    const payload = TripleDes.encrypt(encryptedArray, keyHash, { mode: ModeEcb, padding: PadPkcs7 });
-    return payload.ciphertext.toString(EncBase64);
+    const payload = TripleDes.encrypt(encryptedArray, keyHash, { mode: CryptoJs.mode.ECB, padding: CryptoJs.pad.Pkcs7 });
+    return payload.ciphertext.toString(CryptoJs.enc.Base64);
   }
 
   decrypt(payload: string, key: string) {
-    const encryptedArray = EncBase64.parse(payload);
+    const encryptedArray = CryptoJs.enc.Base64.parse(payload);
     const keyHash = this.getKeyHash(key);
-    const serialized_json = TripleDes.decrypt({ ciphertext: encryptedArray }, { mode: ModeEcb, padding: PadPkcs7 });
-    return serialized_json.toString(EncUtf8);
+    const serialized_json = TripleDes.decrypt({ ciphertext: encryptedArray }, keyHash, { mode: CryptoJs.mode.ECB, padding: CryptoJs.pad.Pkcs7 });
+    return serialized_json.toString(CryptoJs.enc.Utf8);
+
   }
 
   getKeyHash(key: String) {

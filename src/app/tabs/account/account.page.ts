@@ -84,15 +84,23 @@ export class AccountPage implements OnInit {
       this.dataSubHeader.desc.normal = 'Estos son tu datos?...';
 
       let dataToSend = {
-        "document_number": this.signup.documentNumber,
-        "document_type": this.signup.documentType,
-        "expedition_date": this.signup.documentExpeditionDate,
-        "birth_date": this.signup.dateOfBirth
+        document_number: this.signup.documentNumber,
+        document_type: this.signup.documentType,
+        expedition_date: this.signup.documentExpeditionDate,
+        birth_date: this.signup.dateOfBirth
       }
-      console.log('dataToSend > ', dataToSend)
+      // console.log('dataToSend > ', dataToSend)
       this.signupService.signUpCifin(dataToSend).subscribe((res) => {
         console.log('res > ', res)
       })
+
+      let encrypt = this.signupService.testEncrypt(dataToSend)
+      let decrypt = this.signupService.testDecrypt(encrypt);
+
+      console.log('encrypt > ', encrypt)
+      console.log('decrypt > ', decrypt);
+
+
     }
   }
 
