@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SignupService } from '../../services/signup/signup.service'
 
 import { MessageService } from '../../services/message/message.service';
 
@@ -20,14 +21,19 @@ export class AuthorizationPage implements OnInit {
   }
 
   termsAccepted: boolean
-
+  dataFromBehindStep: any
 
   constructor(
     public router: Router,
-    public messageService: MessageService
+    public messageService: MessageService,
+    public signupService: SignupService,
+    public route: ActivatedRoute
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.dataFromBehindStep = this.route.snapshot.queryParams;
+    console.log('datos finales > ', this.dataFromBehindStep)
+  }
 
   finish() {
     if (this.termsAccepted) {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SignupService } from '../../services/signup/signup.service'
 
 import { UserSecurity } from '../../interfaces/user-security';
 
@@ -29,19 +30,33 @@ export class SecurityPage implements OnInit {
 
   submitted = false
 
+  dataFromBehindStep: any = {}
+
 
   constructor(
-    public router: Router
+    public signupService: SignupService,
+    public router: Router,
+    public route: ActivatedRoute
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.dataFromBehindStep = this.route.snapshot.queryParams;
+    console.log('datos 3  > ', this.dataFromBehindStep)
+  }
 
   pinSingup(form: NgForm) {
     this.submitted = true;
-
+    let dataToSave: any = {
+      first: this.dataFromBehindStep.first,
+      second: this.dataFromBehindStep.second,
+      third: this.signupService.encrypt({
+        form: this.signupService.encrypt(this.signup),
+        // response: this.signupService.encrypt(this.resPersonalInfo)
+      })
+    }
     if ((form.valid) && (this.signup.email === this.signup.emailConfirm && this.signup.pin === this.signup.pinConfirm)) {
       this.router
-        .navigateByUrl('/tabs/authorization', { replaceUrl: true })
+        .navigate(['/tabs/authorization'], { queryParams: dataToSave, replaceUrl: true })
         .then(() => {
 
         })

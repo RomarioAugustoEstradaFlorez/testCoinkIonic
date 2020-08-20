@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { ImeiService } from '../../services/imei/imei.service'
+import { SignupService } from '../../services/signup/signup.service'
 
 
 @Component({
@@ -25,16 +27,19 @@ export class NumberPage implements OnInit {
 
   number: any = {
     code: '57',
-    phone: ''
+    phone: '',
+    imei: ''
   }
 
   code: any = {
-    'protect': 'XXXX',
-    'number': ''
+    protect: 'XXXX',
+    number: ''
   }
 
   constructor(
-    public router: Router
+    public router: Router,
+    public imeiService: ImeiService,
+    public signupService: SignupService
   ) { }
 
   ngOnInit() {
@@ -48,6 +53,7 @@ export class NumberPage implements OnInit {
       }
       if (this.number.phone.length == 10) {
         this.confirmPhone = true
+        this.number.imei = this.imeiService.exportgetImei()
       }
     }
 
@@ -96,9 +102,15 @@ export class NumberPage implements OnInit {
 
   confirmTheCode() {
     if (this.code.number.length == 4) {
+      let dataToSave: any = {
+        number: this.number,
+        code: this.code.number
+      }
+      dataToSave = this.signupService.encrypt(dataToSave)
       this.router
-        .navigateByUrl('/tabs/account', { replaceUrl: true })
+        .navigate(['/tabs/account'], { queryParams: { first: dataToSave }, 'replaceUrl': true })
         .then(() => {
+          console.log('se envió');
 
         })
     }

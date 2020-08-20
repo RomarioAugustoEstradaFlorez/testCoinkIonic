@@ -37,15 +37,13 @@ export class SignupService {
     return this.http.post(environment.api + '/login/verifyDirectLogin?apiKey=' + environment.apiKey, { "payload": EncryptData }, { 'headers': this.headers });
   }
 
-  testEncrypt(data) {
+  encrypt(data) {
     let EncryptData = this.encryptService.encrypt(JSON.stringify(data), environment.keyCryptDecrypt)
-    // console.log('EncryptData > ', EncryptData)
     return EncryptData
   }
 
-  testDecrypt(hash) {
+  decrypt(hash) {
     let DecryptData = this.encryptService.decrypt(hash, environment.keyCryptDecrypt)
-    // console.log('DecryptData > ', DecryptData)
     return DecryptData
   }
 

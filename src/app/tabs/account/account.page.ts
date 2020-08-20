@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ɵConsole } from '@angular/core'
 import { NgForm } from '@angular/forms'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
+
 import { AlertController } from '@ionic/angular'
 
 import { UserOptions } from '../../interfaces/user-options'
@@ -67,14 +68,20 @@ export class AccountPage implements OnInit {
     'gender': 'Másculino'
   }
 
+  dataFromBehindStep: any = {}
+
   constructor(
     public router: Router,
     public alertController: AlertController,
     public messageService: MessageService,
-    public signupService: SignupService
+    public signupService: SignupService,
+    public route: ActivatedRoute
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.dataFromBehindStep = this.route.snapshot.queryParams;
+    console.log('datos 2 > ', this.dataFromBehindStep)
+  }
 
 
   onSignup(form: NgForm) {
@@ -88,8 +95,10 @@ export class AccountPage implements OnInit {
         expedition_date: moment(this.signup.documentExpeditionDate).format(cShareFormat),
         birth_date: moment(this.signup.dateOfBirth).format(cShareFormat)
       }
+      this.messageService.presentLoading('Espera mientras validamos la información');
       this.signupService.signUpCifin(dataToSend).subscribe((res) => {
         if (res.first_name !== "") { // res.is_valid always come as a false
+          this.messageService.dismissLoading();
           this.validForm = true;
           this.dataSubHeader.desc.title = 'VERIFICA TUS DATOS';
           this.dataSubHeader.desc.normal = 'Estos son tu datos?...';
@@ -102,6 +111,7 @@ export class AccountPage implements OnInit {
             'gender': res.gender.Name
           }
         } else {
+          this.messageService.dismissLoading();
           let dataMsg = {
             'message': 'No son válidos los datos enviados. Intenta nuevamente.'
           }
@@ -112,6 +122,17 @@ export class AccountPage implements OnInit {
   }
 
   cancel() {
+    let reset = () => this.resetValues();
+    this.messageService.question({ message: 'Se cancelará el progreso' },
+      function okCancel() {
+        reset();
+      },
+      function dontCancel() {
+
+      })
+  }
+
+  resetValues() {
     this.validForm = false;
     this.signup = {
       documentType: null,
@@ -123,8 +144,15 @@ export class AccountPage implements OnInit {
   }
 
   goNext() {
+    let dataToSave: any = {
+      first: this.dataFromBehindStep.first,
+      second: this.signupService.encrypt({
+        form: this.signupService.encrypt(this.signup),
+        response: this.signupService.encrypt(this.resPersonalInfo)
+      })
+    }
     this.router
-      .navigateByUrl('/tabs/security', { replaceUrl: true })
+      .navigate(['/tabs/security'], { queryParams: dataToSave, 'replaceUrl': true })
       .then(() => {
 
       })

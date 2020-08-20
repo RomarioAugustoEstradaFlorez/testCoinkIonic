@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
+  isLoading = false;
 
   constructor(
-    public alertController: AlertController
+    public alertController: AlertController,
+    public loadingController: LoadingController
   ) { }
 
   /**
@@ -41,6 +43,8 @@ export class MessageService {
    * @param cancelAction - the function to manage the state cancel
    */
   public async question(data, okAction = () => { }, cancelAction = () => { }) {
+    if (data.title == '' || data.title == undefined) data.title = '¿Estás seguro?'
+    if (data.message == '' || data.message == undefined) data.message = 'Deseas cancelar?...'
     var alert = await this.alertController.create({
       cssClass: 'message message-question',
       header: data.title,
@@ -98,5 +102,40 @@ export class MessageService {
     });
 
     await alert.present();
+  }
+
+  public async showLoading(message) {
+    const loading = await this.loadingController.create({
+      cssClass: '',
+      message: message,
+      // duration: 2000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
+
+  // loading message
+  async presentLoading(message) {
+    if (message == '' || message == undefined) message = 'Cargando...'
+    this.isLoading = true;
+    return await this.loadingController.create({
+      // duration: 5000,
+      message: message,
+    }).then(a => {
+      a.present().then(() => {
+        console.log('presented');
+        if (!this.isLoading) {
+          a.dismiss().then(() => console.log('abort presenting'));
+        }
+      });
+    });
+  }
+
+  // to close the loading
+  async dismissLoading() {
+    this.isLoading = false;
+    return await this.loadingController.dismiss().then(() => console.log('dismissed'));
   }
 }

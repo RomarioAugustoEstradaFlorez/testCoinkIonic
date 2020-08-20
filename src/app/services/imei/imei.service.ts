@@ -10,7 +10,7 @@ export class ImeiService {
 
   constructor(private uid: Uid, private androidPermissions: AndroidPermissions) { }
 
-  async getImei() {
+  public async exportgetImei() {
     const { hasPermission } = await this.androidPermissions.checkPermission(
       this.androidPermissions.PERMISSION.READ_PHONE_STATE
     );
