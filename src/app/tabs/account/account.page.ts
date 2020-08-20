@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core'
+import { NgForm } from '@angular/forms'
+import { Router } from '@angular/router'
+import { AlertController } from '@ionic/angular'
 
-import { UserOptions } from '../../interfaces/user-options';
+import { UserOptions } from '../../interfaces/user-options'
 
 import { SignupService } from '../../services/signup/signup.service'
 import { MessageService } from '../../services/message/message.service'
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-account',
@@ -58,10 +60,10 @@ export class AccountPage implements OnInit {
   ];
 
   resPersonalInfo: any = {
-    'first_name': 'Alejandro',
+    'first_name': '',
     'second_name': '',
-    'first_last_name': 'Fonnegra',
-    'second_last_name': 'Aguilera',
+    'first_last_name': '',
+    'second_last_name': '',
     'gender': 'Másculino'
   }
 
@@ -74,33 +76,38 @@ export class AccountPage implements OnInit {
 
   ngOnInit() { }
 
+
   onSignup(form: NgForm) {
     this.submitted = true;
 
     if (form.valid) {
-      // console.log('form > ', this.signup)
-      this.validForm = true;
-      this.dataSubHeader.desc.title = 'VERIFICA TUS DATOS';
-      this.dataSubHeader.desc.normal = 'Estos son tu datos?...';
-
+      var cShareFormat = 'YYYY-MM-DD';
       let dataToSend = {
         document_number: this.signup.documentNumber,
         document_type: this.signup.documentType,
-        expedition_date: this.signup.documentExpeditionDate,
-        birth_date: this.signup.dateOfBirth
+        expedition_date: moment(this.signup.documentExpeditionDate).format(cShareFormat),
+        birth_date: moment(this.signup.dateOfBirth).format(cShareFormat)
       }
-      // console.log('dataToSend > ', dataToSend)
       this.signupService.signUpCifin(dataToSend).subscribe((res) => {
-        console.log('res > ', res)
+        if (res.first_name !== "") { // res.is_valid always come as a false
+          this.validForm = true;
+          this.dataSubHeader.desc.title = 'VERIFICA TUS DATOS';
+          this.dataSubHeader.desc.normal = 'Estos son tu datos?...';
+
+          this.resPersonalInfo = {
+            'first_name': res.first_name,
+            'second_name': res.second_name,
+            'first_last_name': res.first_last_name,
+            'second_last_name': res.second_last_name,
+            'gender': res.gender.Name
+          }
+        } else {
+          let dataMsg = {
+            'message': 'No son válidos los datos enviados. Intenta nuevamente.'
+          }
+          this.messageService.error(dataMsg)
+        }
       })
-
-      let encrypt = this.signupService.testEncrypt(dataToSend)
-      let decrypt = this.signupService.testDecrypt(encrypt);
-
-      console.log('encrypt > ', encrypt)
-      console.log('decrypt > ', decrypt);
-
-
     }
   }
 

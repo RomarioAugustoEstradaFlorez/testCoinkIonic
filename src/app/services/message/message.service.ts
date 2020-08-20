@@ -78,6 +78,9 @@ export class MessageService {
    */
   public async error(data, okAction = () => { }) {
     if (data.buttonText == '' || data.buttonText == undefined) data.buttonText = 'Ok'
+    if (data.title == '' || data.title == undefined) data.title = 'Error'
+    if (data.message == '' || data.message == undefined) data.message = 'Hay un error'
+
     var alert = await this.alertController.create({
       cssClass: 'message message-error',
       header: data.title,
