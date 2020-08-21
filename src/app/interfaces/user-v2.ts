@@ -8,6 +8,7 @@ export interface UserV2 {
   birth_date: string;
   gender_id: number;
   state_id?: string;
+  log_signup_id?: string;
   city_id?: string;
   address?: string;
   pin: string;

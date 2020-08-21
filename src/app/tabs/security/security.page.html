@@ -9,8 +9,8 @@
     <ion-list class="form" lines="none">
 
       <ion-item class="form__item">
-        <ion-input [(ngModel)]="signup.email" name="email" #email="ngModel" placeholder="Correo electrónico"
-          type="email" required></ion-input>
+        <ion-input autocomplete="off" autocorrect="off" inputmode="email" [(ngModel)]="signup.email" name="email"
+          #email="ngModel" placeholder="Correo electrónico" type="email" required></ion-input>
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
@@ -19,8 +19,9 @@
       </ion-text>
 
       <ion-item class="form__item">
-        <ion-input [(ngModel)]="signup.emailConfirm" name="emailConfirm" #emailConfirm="ngModel"
-          placeholder="Confirmar correo electrónico" type="email" required></ion-input>
+        <ion-input autocomplete="off" autocorrect="off" inputmode="email" [(ngModel)]="signup.emailConfirm"
+          name="emailConfirm" #emailConfirm="ngModel" placeholder="Confirmar correo electrónico" type="email" required>
+        </ion-input>
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="emailConfirm.valid || submitted == false" class="ion-padding-start">

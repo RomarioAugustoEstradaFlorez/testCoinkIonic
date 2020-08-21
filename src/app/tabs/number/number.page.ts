@@ -5,6 +5,7 @@ import { SignupService } from '../../services/signup/signup.service'
 import { MessageService } from '../../services/message/message.service'
 import { StorageService } from 'src/app/services/storage/storage.service'
 import { Platform } from '@ionic/angular'
+import { isObject } from 'util'
 
 
 @Component({
@@ -64,10 +65,19 @@ export class NumberPage implements OnInit {
       if (this.number.phone.length < 10) {
         this.number.phone += '' + num
       }
-      if (this.number.phone.length == 10) {
-        this.confirmPhone = true
-        // this.number.imei = this.imeiService.getImei()
-        this.number.imei = "7AD0E1F1-521E-43E6-B267-62D10CDEEC79"
+      if (this.number.phone.length >= 3) {
+        if (this.number.phone.charAt(0) == "3") {
+          if (this.number.phone.length == 10) {
+            this.confirmPhone = true
+            if (this.imeiService.getImei() !== null && typeof this.imeiService.getImei() !== 'object') {
+              this.number.imei = this.imeiService.getImei() // real
+            } else {
+              this.number.imei = "7AD0E1F1-521E-43E6-B267-62D10CDEEC79" // test
+            }
+          }
+        } else {
+          this.messageService.error({ message: 'El número debe empezar en <strong>3</strong> ya que debe ser un número colombiano.' })
+        }
       }
     }
 
@@ -129,7 +139,7 @@ export class NumberPage implements OnInit {
   }
 
   resendCode() {
-
+    this.messageService.normal({ title: "!Codigo reenviado!", message: "Se ha enviado el código nuevamente!" })
   }
 
 }

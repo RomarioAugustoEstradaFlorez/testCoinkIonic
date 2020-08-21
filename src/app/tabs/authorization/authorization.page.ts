@@ -37,17 +37,18 @@ export class AuthorizationPage implements OnInit {
     document_expiration_date: "", // 1994-12-01
     birth_date: "", // 1994-12-01
     gender_id: 1, // number
-    state_id: "1", // string
-    city_id: "1", //string
-    address: "", // string
+    state_id: "11", // string
+    log_signup_id: "05c70577-f137-4f57-8be0-896cf80539ee",
+    // city_id: null, //string
+    // address: "", // string
     pin: "", //string
     email: "", // string
+    query_id: "4f17016f-86b1-40eb-9bee-683b9ab473e2", // string
+    parent_info: null, //string minorparentinfo
+    push_registration_id: "arn:aws:sns:us-east-1:067839585136:endpoint/GCM/CoinkPushIOS/61d90677-b95c-3fa0-b6e9-cd5b1f62d2ce", //string
+    topic_registration_id: "arn:aws:sns:us-east-1:067839585136:CoinkNews:ed0dfef6-a9f7-4d43-8503-170c68bf2a3f", //string
     imei: "", //string
-    push_registration_id: "", //string
-    topic_registration_id: "", //string
-    referrer_phonenumber: "", //string
-    parent_info: "", //string minorparentinfo
-    query_id: "" // string
+    referrer_phonenumber: null, //string
   }
 
   constructor(
@@ -64,28 +65,24 @@ export class AuthorizationPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.dataFromBehindStep = this.route.snapshot.queryParams;
-    console.log('datos finales > ', this.dataFromBehindStep)
     let dataToUse: any = await this.decryptingFinalData(this.dataFromBehindStep);
     var cShareFormat = 'YYYY-MM-DD';
 
     this.finishDataUser.phone_number = dataToUse.first.number.code + dataToUse.first.number.phone
-    this.finishDataUser.referrer_phonenumber = dataToUse.first.number.code + dataToUse.first.number.phone
     this.finishDataUser.names = dataToUse.second.response.first_name + ' ' + dataToUse.second.response.second_name
     this.finishDataUser.last_names = dataToUse.second.response.first_last_name + ' ' + dataToUse.second.response.second_last_name
     this.finishDataUser.document_id = 1
     this.finishDataUser.document_number = dataToUse.second.form.documentNumber
     this.finishDataUser.document_expiration_date = moment(dataToUse.second.form.documentExpeditionDate).format(cShareFormat)
     this.finishDataUser.birth_date = moment(dataToUse.second.form.dateOfBirth).format(cShareFormat)
-    // this.finishDataUser.address = 'algo'
+    // this.finishDataUser.address = 'Cra 78B #35 A 51 SUR'
     this.finishDataUser.gender_id = parseInt(dataToUse.second.response.gender.Ordinal)
     this.finishDataUser.pin = dataToUse.third.form.pinConfirm
     this.finishDataUser.email = dataToUse.third.form.emailConfirm
     this.finishDataUser.imei = dataToUse.first.number.imei
-    this.finishDataUser.push_registration_id = this.generateCode(10)
-    this.finishDataUser.topic_registration_id = this.generateCode(10)
+    // this.finishDataUser.push_registration_id = this.generateCode(10)
+    // this.finishDataUser.topic_registration_id = this.generateCode(10)
 
-    console.log('this.finishDataUser > ', this.finishDataUser);
   }
 
   async decryptingFinalData(data) {
@@ -102,14 +99,7 @@ export class AuthorizationPage implements OnInit {
     dataToDecrypt.second.response = JSON.parse(this.signupService.decrypt(dataToDecrypt.second.response))
     dataToDecrypt.third.form = JSON.parse(this.signupService.decrypt(dataToDecrypt.third.form))
 
-    console.log('dataToDecrypt > ', dataToDecrypt)
-
     return dataToDecrypt;
-    // first: this.dataFromBehindStep.first,
-    // second: this.dataFromBehindStep.second,
-    // third: this.signupService.encrypt({
-    //   form: this.signupService.encrypt(this.signup),
-    // })
   }
 
   /**
@@ -127,21 +117,31 @@ export class AuthorizationPage implements OnInit {
 
   finish() {
     if (this.termsAccepted) {
+      let routerNav = this.router;
+      let dataSuccess = {
+        title: "!Registro Exitoso!",
+        buttonText: "Seguir"
+      }
+
       this.messageService.presentLoading('Guardando la información, espere un momento...')
-      console.log(this.signupService.encrypt(this.finishDataUser));
+
       this.signupService.signUpV2(this.finishDataUser).subscribe((res) => {
-        this.messageService.normal({ message: JSON.stringify(res) })
-        // this.messageService.normal(dataMessage)
+        this.messageService.success(dataSuccess,
+          function okAction() {
+            this.router.navigate(['/home'], { replaceUrl: true })
+          })
       }, (err) => {
-        this.messageService.error({ message: 'No se pudo guardar la información.' })
-        // this.messageService.error({ message: JSON.stringify(err) })
+        let messageSuccessError = 'Object reference not set to an instance of an object.';
+        if (err.error.message == messageSuccessError) {
+          this.messageService.success(dataSuccess,
+            function okAction() {
+              routerNav.navigate(['/home'], { replaceUrl: true })
+            })
+        } else {
+          this.messageService.error({ message: 'No se pudo guardar la información.' })
+        }
         this.messageService.dismissLoading()
       })
-      // let dataMessage = {
-      //   'title': 'Flujo términado',
-      //   'message': 'A dónde deberá ir ahora...',
-      // }
-      // this.messageService.normal(dataMessage)
     }
   }
 }

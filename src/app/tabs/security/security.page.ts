@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SignupService } from '../../services/signup/signup.service'
-import { Storage } from '@ionic/storage';
 
 import { UserSecurity } from '../../interfaces/user-security';
 import { Platform } from '@ionic/angular';
@@ -48,10 +47,7 @@ export class SecurityPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.dataFromBehindStep = this.route.snapshot.queryParams;
-    console.log('datos 3  > ', this.dataFromBehindStep)
-  }
+  ngOnInit() { }
 
   pinSingup(form: NgForm) {
     this.submitted = true;
@@ -73,7 +69,6 @@ export class SecurityPage implements OnInit {
   }
 
   onlyNumber(event, name) {
-    // console.log('event > ', event)
     if (event.which <= 90 && event.which >= 48 && event.which != 9) {
       if (/\D/g.test(event.key)) {
         this.signup['' + name] = event.key.replace(/\D/g, '')

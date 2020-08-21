@@ -82,10 +82,7 @@ export class AccountPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.dataFromBehindStep = this.route.snapshot.queryParams;
-    console.log('datos 2 > ', this.dataFromBehindStep)
-  }
+  ngOnInit() { }
 
 
   onSignup(form: NgForm) {
@@ -125,7 +122,6 @@ export class AccountPage implements OnInit {
         }
       }, (err) => {
         this.messageService.error({ message: 'No se pudo validar la información' })
-        // this.messageService.error({ message: JSON.stringify(err) })
         this.messageService.dismissLoading()
       })
     }

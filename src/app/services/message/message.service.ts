@@ -20,6 +20,7 @@ export class MessageService {
    * @param data - This have the information to the message
    */
   public async normal(data, okAction = () => { }) {
+    if (data.title == '' || data.title == undefined) data.title = 'Mensaje'
     if (data.buttonText == '' || data.buttonText == undefined) data.buttonText = 'Ok'
 
     var alert = await this.alertController.create({
@@ -50,6 +51,7 @@ export class MessageService {
       header: data.title,
       subHeader: data.subtitle,
       message: data.message,
+      backdropDismiss: false, // block the click away from the message
       buttons: [
         {
           text: 'No',
@@ -78,7 +80,6 @@ export class MessageService {
    * a good functionality
    * @param data - This have the information to the message
    * @param okAction - The function to manage the ok state
-   * @param cancelAction - the function to manage the cancel state 
    */
   public async error(data, okAction = () => { }) {
     if (data.buttonText == '' || data.buttonText == undefined) data.buttonText = 'Ok'
@@ -104,6 +105,41 @@ export class MessageService {
     await alert.present();
   }
 
+  /**
+  * Autor - Romario Estrada romarioestrada.ff@hotmail.com
+  * success - This show an alert with one option.
+  * This use the AlertController from Ionic and provides 
+  * a good functionality
+  * @param data - This have the information to the message
+  * @param okAction - The function to manage the ok state
+  */
+  public async success(data, okAction = () => { }) {
+    if (data.buttonText == '' || data.buttonText == undefined) data.buttonText = 'Aceptar'
+    if (data.title == '' || data.title == undefined) data.title = 'Proceso Exitoso'
+    if (data.message == '' || data.message == undefined) data.message = 'Gracias por usar <strong>Coink</strong>, sigue y encuentra todo lo que puedes hacer con nosotros!'
+
+    var alert = await this.alertController.create({
+      cssClass: 'message message-success',
+      header: data.title,
+      subHeader: data.subtitle,
+      message: data.message,
+      backdropDismiss: false, // block the click away from the message
+      buttons: [
+        {
+          text: data.buttonText,
+          role: 'ok',
+          handler: () => {
+            return okAction()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+  //  ------- LOADING -------
   public async showLoading(message) {
     const loading = await this.loadingController.create({
       cssClass: '',
