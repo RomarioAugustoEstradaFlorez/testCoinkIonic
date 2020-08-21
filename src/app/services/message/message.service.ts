@@ -174,4 +174,5 @@ export class MessageService {
     this.isLoading = false;
     return await this.loadingController.dismiss().then(() => console.log('dismissed'));
   }
+
 }

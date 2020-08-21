@@ -35,11 +35,6 @@ export class WifiService {
       setTimeout(() => {
         if (this.network.type === 'wifi') {
           console.log('we got a wifi connection, woohoo!');
-          let data = {
-            'title': 'Mensaje',
-            'message': 'Hay conexión wifi!!!'
-          }
-          this.messageService.normal(data)
         }
       }, 3000);
     });

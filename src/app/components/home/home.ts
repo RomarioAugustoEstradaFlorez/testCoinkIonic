@@ -5,6 +5,7 @@ const { App } = Plugins;
 
 import { MenuController, IonSlides, Platform, IonRouterOutlet } from '@ionic/angular';
 import { MessageService } from 'src/app/services/message/message.service';
+import { WifiService } from 'src/app/services/wifi/wifi.service';
 
 @Component({
   selector: 'page-home',
@@ -21,7 +22,8 @@ export class HomePage {
     public router: Router,
     private platform: Platform,
     private routerOutlet: IonRouterOutlet,
-    private messageService: MessageService
+    private messageService: MessageService,
+    public wifiService: WifiService
   ) {
     this.platform.backButton.subscribeWithPriority(-1, () => {
       // this.messageService.normal({ "message": this.routerOutlet.canGoBack() });
@@ -29,6 +31,7 @@ export class HomePage {
         App.exitApp();
       }
     });
+    this.wifiService.checkConnection()
   }
 
   signUp() {
