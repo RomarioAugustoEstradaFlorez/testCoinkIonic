@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SignupService } from '../../services/signup/signup.service'
+import { Storage } from '@ionic/storage';
 
 import { UserSecurity } from '../../interfaces/user-security';
+import { Platform } from '@ionic/angular';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-security',
@@ -36,8 +39,14 @@ export class SecurityPage implements OnInit {
   constructor(
     public signupService: SignupService,
     public router: Router,
-    public route: ActivatedRoute
-  ) { }
+    public route: ActivatedRoute,
+    public platform: Platform,
+    public storageService: StorageService
+  ) {
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      this.router.navigate(['/' + this.dataHeader.behind])
+    });
+  }
 
   ngOnInit() {
     this.dataFromBehindStep = this.route.snapshot.queryParams;
@@ -51,15 +60,15 @@ export class SecurityPage implements OnInit {
       second: this.dataFromBehindStep.second,
       third: this.signupService.encrypt({
         form: this.signupService.encrypt(this.signup),
-        // response: this.signupService.encrypt(this.resPersonalInfo)
       })
     }
-    if ((form.valid) && (this.signup.email === this.signup.emailConfirm && this.signup.pin === this.signup.pinConfirm)) {
-      this.router
-        .navigate(['/tabs/authorization'], { queryParams: dataToSave, replaceUrl: true })
-        .then(() => {
 
-        })
+    this.storageService.setItem('third', this.signupService.encrypt({
+      form: this.signupService.encrypt(this.signup)
+    }))
+
+    if ((form.valid) && (this.signup.email === this.signup.emailConfirm && this.signup.pin === this.signup.pinConfirm)) {
+      this.router.navigate(['/tabs/authorization'], { replaceUrl: true })
     }
   }
 

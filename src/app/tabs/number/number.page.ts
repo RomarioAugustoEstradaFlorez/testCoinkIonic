@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { ImeiService } from '../../services/imei/imei.service'
 import { SignupService } from '../../services/signup/signup.service'
+import { MessageService } from '../../services/message/message.service'
+import { StorageService } from 'src/app/services/storage/storage.service'
+import { Platform } from '@ionic/angular'
 
 
 @Component({
@@ -39,10 +42,20 @@ export class NumberPage implements OnInit {
   constructor(
     public router: Router,
     public imeiService: ImeiService,
-    public signupService: SignupService
-  ) { }
+    public signupService: SignupService,
+    public messageService: MessageService,
+    public platform: Platform,
+    public storageService: StorageService
+  ) {
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      this.router.navigate(['/home'])
+    });
+  }
 
   ngOnInit() {
+    this.storageService.removeItem('first')
+    this.storageService.removeItem('second')
+    this.storageService.removeItem('third')
   }
 
   addNumber(num: number) {
@@ -53,7 +66,8 @@ export class NumberPage implements OnInit {
       }
       if (this.number.phone.length == 10) {
         this.confirmPhone = true
-        this.number.imei = this.imeiService.exportgetImei()
+        // this.number.imei = this.imeiService.getImei()
+        this.number.imei = "7AD0E1F1-521E-43E6-B267-62D10CDEEC79"
       }
     }
 
@@ -107,12 +121,10 @@ export class NumberPage implements OnInit {
         code: this.code.number
       }
       dataToSave = this.signupService.encrypt(dataToSave)
-      this.router
-        .navigate(['/tabs/account'], { queryParams: { first: dataToSave }, 'replaceUrl': true })
-        .then(() => {
-          console.log('se envió');
 
-        })
+      this.storageService.setItem('first', dataToSave);
+      this.router
+        .navigate(['/tabs/account'], { replaceUrl: true })
     }
   }
 

@@ -1,11 +1,9 @@
 import { Component, OnInit, ɵConsole } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router'
-
-import { AlertController } from '@ionic/angular'
-
+import { AlertController, Platform } from '@ionic/angular'
 import { UserOptions } from '../../interfaces/user-options'
-
+import { StorageService } from 'src/app/services/storage/storage.service'
 import { SignupService } from '../../services/signup/signup.service'
 import { MessageService } from '../../services/message/message.service'
 
@@ -75,8 +73,14 @@ export class AccountPage implements OnInit {
     public alertController: AlertController,
     public messageService: MessageService,
     public signupService: SignupService,
-    public route: ActivatedRoute
-  ) { }
+    public route: ActivatedRoute,
+    public platform: Platform,
+    public storageService: StorageService
+  ) {
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      this.router.navigate(['/' + this.dataHeader.behind])
+    });
+  }
 
   ngOnInit() {
     this.dataFromBehindStep = this.route.snapshot.queryParams;
@@ -95,7 +99,9 @@ export class AccountPage implements OnInit {
         expedition_date: moment(this.signup.documentExpeditionDate).format(cShareFormat),
         birth_date: moment(this.signup.dateOfBirth).format(cShareFormat)
       }
+
       this.messageService.presentLoading('Espera mientras validamos la información');
+
       this.signupService.signUpCifin(dataToSend).subscribe((res) => {
         if (res.first_name !== "") { // res.is_valid always come as a false
           this.messageService.dismissLoading();
@@ -108,7 +114,7 @@ export class AccountPage implements OnInit {
             'second_name': res.second_name,
             'first_last_name': res.first_last_name,
             'second_last_name': res.second_last_name,
-            'gender': res.gender.Name
+            'gender': res.gender
           }
         } else {
           this.messageService.dismissLoading();
@@ -117,6 +123,10 @@ export class AccountPage implements OnInit {
           }
           this.messageService.error(dataMsg)
         }
+      }, (err) => {
+        this.messageService.error({ message: 'No se pudo validar la información' })
+        // this.messageService.error({ message: JSON.stringify(err) })
+        this.messageService.dismissLoading()
       })
     }
   }
@@ -151,11 +161,12 @@ export class AccountPage implements OnInit {
         response: this.signupService.encrypt(this.resPersonalInfo)
       })
     }
-    this.router
-      .navigate(['/tabs/security'], { queryParams: dataToSave, 'replaceUrl': true })
-      .then(() => {
-
-      })
+    this.storageService.setItem('second', this.signupService.encrypt({
+      form: this.signupService.encrypt(this.signup),
+      response: this.signupService.encrypt(this.resPersonalInfo)
+    })
+    )
+    this.router.navigate(['/tabs/security'], { replaceUrl: true })
   }
 
 }

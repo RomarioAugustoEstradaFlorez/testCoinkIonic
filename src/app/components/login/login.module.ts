@@ -2,21 +2,17 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AccountPage } from './account.page';
-import { ExploreComponentModule } from '../../container/explore/explore.module';
+import { LoginPage } from './login';
 import { InfopigComponentModule } from '../../container/infopig/infopig.module';
-
-import { AccountPageRoutingModule } from './account-routing.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreComponentModule,
-    InfopigComponentModule,
-    AccountPageRoutingModule
+    InfopigComponentModule
   ],
-  declarations: [AccountPage]
+  declarations: [LoginPage],
+  entryComponents: [LoginPage],
 })
-export class AccountPageModule { }
+export class LoginModule { }
